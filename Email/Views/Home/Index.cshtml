@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+
+    if (IsPost)
+    {
+        string Mensagem = Request.Form["Mensagem"];
+
+        <text>
+            Mensagem:@Mensagem
+            <br />
+   
+        </text>
+
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enviando Mensagem</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <form method="post">
+        <fieldset>
+            <div>
+                <br />
+                <label for="Mensagem">Mensagem:</label>
+                <input type="text" name="Mensagem" value="" />
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <input type="submit" value="Enviar" class="submit" />
+            </div>
+        </fieldset>
+    </form>
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-messaging.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+
+        EnviaMensagem();
+
+        function EnviaMensagem() {
+
+            const mensagem = {
+                "Titulo": "Titulo",
+                "Texto": "Texto"
+            };
+
+            axios.post("http://127.0.0.1:3000/home", {
+                "Titulo": "Titulo"
+            }).then(() => console.log("funfo"))
+              .catch((err) => console.log(err));
+            /*
+            axios.post("http://127.0.0.1:3000/home", mensagem)
+                .then(() => console.log("funfo"))
+                .catch((err) => console.log(err));
+
+            console.log('Post');
+            */
+        }
+
+    </script>
+
+</body>
+</html>
