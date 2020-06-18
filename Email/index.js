@@ -3,37 +3,43 @@ var cors = require('cors')
 var bodyParser = require('body-parser')
 var porta = 3000;
 var app = express();
+var admin = require("firebase-admin");
+var serviceAccount = require("chave");
 
 app.use(cors())
-
-app.get('/', function (req, res) {
-    res.json({ status: 'Servidor rodando!' })
-})
-
 app.use(bodyParser.json());
-
-app.listen(porta, function () {
-    console.log('Servidor está rodando no localhost:' + porta)
-})
-
-var admin = require("firebase-admin");
-
-var serviceAccount = require("chave");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://teste-f60cd.firebaseio.com"
 });
 
+app.listen(porta, function () {
+    console.log('Servidor está rodando no localhost:' + porta)
+})
 
+// Método get chamado por Localhot:3000
+app.get('/', function (req, res) {
+    res.json({ status: 'Servidor rodando!' })
+})
+
+// Método post chamado por Localhot:3000/home
 app.post('/home', function (req, res) {
 
-    var token = [req.body["Token"]];
-       
+    EnviarMensagem(req.body["Titulo"],
+                   req.body["Texto"],
+                   req.body["Token"]);
+
+});
+
+function EnviarMensagem(Titulo, Mensagem, Token) {
+
+    var token = [Token];
+
     var message = {
         notification: {
-            title: req.body["Titulo"],
-            body: req.body["Texto"]
+            title: Titulo,
+            body: Mensagem
         },
         tokens: token
     };
@@ -45,4 +51,5 @@ app.post('/home', function (req, res) {
         .catch((error) => {
             console.log('Error sending message:', error);
         });
-});
+
+}

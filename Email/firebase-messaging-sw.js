@@ -1,7 +1,7 @@
 ﻿importScripts('https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/7.15.0/firebase-messaging.js');
 
-// Inicializa o Firebase
+// Configuração do Firebase
 const Configuracao = {
     apiKey: "AIzaSyCdkAS1LlHP9alON9L7h34x7sJPPNhvvZ4",
     authDomain: "teste-f60cd.firebaseapp.com",
