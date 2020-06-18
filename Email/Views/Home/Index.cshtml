@@ -1,17 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 
-    if (IsPost)
-    {
-        string Mensagem = Request.Form["Mensagem"];
-
-        <text>
-            Mensagem:@Mensagem
-            <br />
-   
-        </text>
-
-    }
 }
 
 <!DOCTYPE html>
@@ -21,20 +10,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <form method="post">
-        <fieldset>
-            <div>
-                <br />
-                <label for="Mensagem">Mensagem:</label>
-                <input type="text" name="Mensagem" value="" />
-            </div>
-            <div>
-                <label>&nbsp;</label>
-                <input type="submit" value="Enviar" class="submit" />
-            </div>
-        </fieldset>
-    </form>
 
+    <form id="Form">
+        <div class="form-group">
+            <label>Título</label>
+            <input type="text" class="form-control" id="titulo">
+        </div>
+        <div class="form-group">
+            <label>Texto</label>
+            <input class="form-control" type="text" id="mensagem">
+        </div>
+        <input type="button" class="btn btn-primary" onclick="Enviar()" value="Enviar">
+    </form>
 
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
 
@@ -44,26 +31,27 @@
 
     <script>
 
-        EnviaMensagem();
+        function Enviar() {
 
-        function EnviaMensagem() {
+            document.getElementById("Form").submit();
+
+            EnviaMensagem(document.getElementById("titulo").value,
+                document.getElementById("mensagem").value)
+
+        }
+
+        function EnviaMensagem(title, msg) {
 
             const mensagem = {
-                "Titulo": "Titulo",
-                "Texto": "Texto"
+                Titulo: title,
+                Texto: msg,
+                Token: 'd3ciqDvuQ4iIxR7O-ieHj8:APA91bFsu3en2LiuWwyru5rYHcCfIDbuF4GBIVD0SUoWPaYpcDVuJhxJ9EngwwBY8qdrUihfJ9jt_Zpwj5uPfYzr9w79TmFnnUUvqPgSWEDLq66F2tJuoZG-E1ka6rv3ItZ7xb6x-NU8'
             };
 
-            axios.post("http://127.0.0.1:3000/home", {
-                "Titulo": "Titulo"
-            }).then(() => console.log("funfo"))
-              .catch((err) => console.log(err));
-            /*
             axios.post("http://127.0.0.1:3000/home", mensagem)
-                .then(() => console.log("funfo"))
+                .then(() => console.log("Executando o Post"))
                 .catch((err) => console.log(err));
 
-            console.log('Post');
-            */
         }
 
     </script>
