@@ -58,9 +58,7 @@
 
        function Enviar() {
 
-            //document.getElementById("Form").submit();
-
-            db.collection("Tokens").get().then(function (querySnapshot) {
+            db.collection("Tokens").where('Cidade', '==', 'Alfenas').get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
 
                     ListaToken.push(doc.get('Token'));
@@ -70,6 +68,8 @@
                     document.getElementById("mensagem").value,
                     ListaToken);
             });
+
+           ListaToken = [];
 
         }
 
