@@ -25,16 +25,16 @@ app.get('/', function (req, res) {
 
 // Método post chamado por Localhot:3000/home
 app.post('/home', function (req, res) {
-
+    
     EnviarMensagem(req.body["Titulo"],
                    req.body["Texto"],
                    req.body["Token"]);
-
+   console.log(req.body);
 });
 
 function EnviarMensagem(Titulo, Mensagem, Token) {
-
-    var token = [Token];
+       
+    var token = Token;
 
     var message = {
         notification: {
@@ -43,7 +43,8 @@ function EnviarMensagem(Titulo, Mensagem, Token) {
         },
         tokens: token
     };
-
+    console.log(message);
+ 
     admin.messaging().sendMulticast(message)
         .then((response) => {
             console.log('Successfully sent message:', response);

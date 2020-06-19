@@ -24,17 +24,20 @@
     </form>
 
 
-    <!--Javascript-->
 
+    <!--Javascript-->
     <!--Importações Firebase e outros-->
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-
+        var peloamordedeus;
         // Configuração do Firebase
         const Configuracao = {
             apiKey: "AIzaSyCdkAS1LlHP9alON9L7h34x7sJPPNhvvZ4",
@@ -46,16 +49,28 @@
             appId: "1:600499591270:web:e677f069d945b3c375f5a7",
             measurementId: "G-WEBNJ7JNET"
         };
-
+      
         firebase.initializeApp(Configuracao);
 
-        function Enviar() {
+        var db = firebase.firestore();
 
-            document.getElementById("Form").submit();
+        var ListaToken = [];
 
-            EnviaMensagem(document.getElementById("titulo").value,
-                document.getElementById("mensagem").value,
-                'd3ciqDvuQ4iIxR7O-ieHj8:APA91bFsu3en2LiuWwyru5rYHcCfIDbuF4GBIVD0SUoWPaYpcDVuJhxJ9EngwwBY8qdrUihfJ9jt_Zpwj5uPfYzr9w79TmFnnUUvqPgSWEDLq66F2tJuoZG-E1ka6rv3ItZ7xb6x-NU8');
+       function Enviar() {
+
+            //document.getElementById("Form").submit();
+
+            db.collection("Tokens").get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+
+                    ListaToken.push(doc.get('Token'));
+
+                });
+               EnviaMensagem(document.getElementById("titulo").value,
+                    document.getElementById("mensagem").value,
+                    ListaToken);
+            });
+
         }
 
         function EnviaMensagem(title, msg, token) {
@@ -64,20 +79,13 @@
                 Titulo: title,
                 Texto: msg,
                 Token: token
-            };
+            };           
 
-            if (axios.post("http://127.0.0.1:3000/home", mensagem)
+            console.log(mensagem);
+            axios.post("http://127.0.0.1:3000/home", mensagem)
                 .then(() => console.log("Executando o Post"))
-                .catch((err) => console.log(err))) {
-
-                alert('Enviado com sucesso!');
-
-            } else {
-
-                alert('Ocorreu um erro no envio da mensagem');
-
-            }
-
+                .catch((err) => console.log(err)) 
+      
         }
 
     </script>
