@@ -5,25 +5,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
     <title>Enviando Mensagem</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
     <!-- Formulário-->
-    <form id="Form">
-        <div class="form-group">
-            <label>Título</label>
-            <input type="text" class="form-control" id="titulo">
+    <div class="container">
+        <div class="row">
+            <form class="col-md-4" id="Form">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" class="form-control" id="titulo">
+                </div>
+                <div class="form-group">
+                    <label>Mensagem</label>
+                    <input class="form-control" type="text" id="mensagem">
+                </div>
+                <input type="button" class="btn btn-primary" onclick="Comecar()" value="Enviar">
+                <input type="button" class="btn btn-danger" onclick="Parar()" value="Parar">
+            </form>
         </div>
-        <div class="form-group">
-            <label>Mensagem</label>
-            <input class="form-control" type="text" id="mensagem">
-        </div>
-        <input type="button" class="btn btn-primary" onclick="Enviar()" value="Enviar">
-    </form>
-
-
+    </div>
 
     <!--Javascript-->
     <!--Importações Firebase e outros-->
@@ -37,39 +47,51 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-        var peloamordedeus;
+
         // Configuração do Firebase
         const Configuracao = {
-            apiKey: "AIzaSyCdkAS1LlHP9alON9L7h34x7sJPPNhvvZ4",
-            authDomain: "teste-f60cd.firebaseapp.com",
-            databaseURL: "https://teste-f60cd.firebaseio.com",
-            projectId: "teste-f60cd",
-            storageBucket: "teste-f60cd.appspot.com",
-            messagingSenderId: "600499591270",
-            appId: "1:600499591270:web:e677f069d945b3c375f5a7",
-            measurementId: "G-WEBNJ7JNET"
+            apiKey: "AIzaSyBo8vMQdWAtFagrSyK1Ok904haWmIbwf7c",
+            authDomain: "teste-web-7e9dc.firebaseapp.com",
+            databaseURL: "https://teste-web-7e9dc.firebaseio.com",
+            projectId: "teste-web-7e9dc",
+            storageBucket: "teste-web-7e9dc.appspot.com",
+            messagingSenderId: "107574881124",
+            appId: "1:107574881124:web:6b68c547beeb19ef1ee871",
+            measurementId: "G-NM0EFBW5VV"
         };
-      
+
         firebase.initializeApp(Configuracao);
 
         var db = firebase.firestore();
 
         var ListaToken = [];
 
-       function Enviar() {
+        function Comecar() {/*
+            var i = 0;
+            while (i < 100) {
 
-            db.collection("Tokens").where('Cidade', '==', 'Alfenas').get().then(function (querySnapshot) {
+                setTimeout(function () { Enviar() }, 1000);
+
+                i++;
+            }     */    
+            Enviar();
+
+        }
+
+        function Enviar() {
+  
+            db.collection("Dispositivos").where('Cidade', '==', 'Alfenas').get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
 
                     ListaToken.push(doc.get('Token'));
 
                 });
-               EnviaMensagem(document.getElementById("titulo").value,
+                EnviaMensagem(document.getElementById("titulo").value,
                     document.getElementById("mensagem").value,
                     ListaToken);
             });
 
-           ListaToken = [];
+            ListaToken = [];
 
         }
 
@@ -79,16 +101,23 @@
                 Titulo: title,
                 Texto: msg,
                 Token: token
-            };           
+            };
 
-            console.log(mensagem);
             axios.post("http://127.0.0.1:3000/home", mensagem)
                 .then(() => console.log("Executando o Post"))
-                .catch((err) => console.log(err)) 
-      
+                .catch((err) => console.log(err))
+
+        }
+
+        function Parar() {
+            w.terminate();
+            w = undefined;
         }
 
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Firebase.Database;
 using Firebase.Database.Query;
 using System.Threading.Tasks;
-using Email.Models;
 
 namespace Email.Controllers
 {
@@ -14,7 +13,7 @@ namespace Email.Controllers
     {
         public async Task<ActionResult> Index()
         {
-            string texto = "ola";
+
             return View();
            
         }

@@ -9,10 +9,12 @@ var serviceAccount = require("chave");
 app.use(cors())
 app.use(bodyParser.json());
 
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://teste-f60cd.firebaseio.com"
+    databaseURL: "https://teste-web-7e9dc.firebaseio.com"
 });
+
 
 app.listen(porta, function () {
     console.log('Servidor está rodando no localhost:' + porta)
