@@ -30,7 +30,6 @@
                     <input class="form-control" type="text" id="mensagem">
                 </div>
                 <input type="button" class="btn btn-primary" onclick="Comecar()" value="Enviar">
-                <input type="button" class="btn btn-danger" onclick="Parar()" value="Parar">
             </form>
         </div>
     </div>
@@ -66,29 +65,31 @@
 
         var ListaToken = [];
 
-        function Comecar() {/*
-            var i = 0;
-            while (i < 100) {
+        function Comecar() {
 
-                setTimeout(function () { Enviar() }, 1000);
-
-                i++;
-            }     */    
             Enviar();
 
         }
 
         function Enviar() {
-  
+
             db.collection("Dispositivos").where('Cidade', '==', 'Alfenas').get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
 
                     ListaToken.push(doc.get('Token'));
 
+                    if ((doc.get('Latitude') != null) && (doc.get('Longitude') != null)) {
+                        console.log('Mac: ' + doc.get('MAC'));
+                        console.log('Latitude: ' + doc.get('Latitude'));
+                        console.log('Longitude: ' + doc.get('Longitude'));
+                        console.log('===================================');
+                    }
+
                 });
                 EnviaMensagem(document.getElementById("titulo").value,
                     document.getElementById("mensagem").value,
                     ListaToken);
+
             });
 
             ListaToken = [];
@@ -107,11 +108,6 @@
                 .then(() => console.log("Executando o Post"))
                 .catch((err) => console.log(err))
 
-        }
-
-        function Parar() {
-            w.terminate();
-            w = undefined;
         }
 
     </script>
