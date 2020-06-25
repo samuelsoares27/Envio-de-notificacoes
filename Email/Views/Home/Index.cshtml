@@ -78,13 +78,6 @@
 
                     ListaToken.push(doc.get('Token'));
 
-                    if ((doc.get('Latitude') != null) && (doc.get('Longitude') != null)) {
-                        console.log('Mac: ' + doc.get('MAC'));
-                        console.log('Latitude: ' + doc.get('Latitude'));
-                        console.log('Longitude: ' + doc.get('Longitude'));
-                        console.log('===================================');
-                    }
-
                 });
                 EnviaMensagem(document.getElementById("titulo").value,
                     document.getElementById("mensagem").value,
@@ -107,6 +100,27 @@
             axios.post("http://127.0.0.1:3000/home", mensagem)
                 .then(() => console.log("Executando o Post"))
                 .catch((err) => console.log(err))
+
+            setTimeout(function () {
+
+                db.collection("Dispositivos").where('Cidade', '==', 'Alfenas').get().then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+
+                        ListaToken.push(doc.get('Token'));
+
+                        if ((doc.get('Latitude') != null) && (doc.get('Longitude') != null)) {
+                            console.log('Mac: ' + doc.get('MAC'));
+                            console.log('Latitude: ' + doc.get('Latitude'));
+                            console.log('Longitude: ' + doc.get('Longitude'));
+                            console.log('===================================');
+                        }
+
+                    });
+
+                });
+
+            }, 10000);
+
 
         }
 
