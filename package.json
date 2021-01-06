@@ -4,7 +4,7 @@
   "description": "pacote em json",
   "main": "firebase-messaging-sw.js",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "demo-home-work": "^1.0.2",
     "express": "^4.17.1",
