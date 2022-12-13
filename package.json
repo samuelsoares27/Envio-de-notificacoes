@@ -7,7 +7,7 @@
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "demo-home-work": "^1.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase-admin": "^8.12.1",
     "require": "^2.4.20",
     "requirejs": "^2.3.6"
